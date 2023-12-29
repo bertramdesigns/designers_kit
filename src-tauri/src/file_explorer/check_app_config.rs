@@ -4,7 +4,7 @@ use std::fs::{self};
 use std::io::BufReader;
 use tauri::api::path::config_dir;
 
-use crate::file_explorer::create_folder;
+use crate::file_explorer::create_folder::create_folder;
 
 #[derive(serde::Serialize)]
 pub struct AppConfig {
