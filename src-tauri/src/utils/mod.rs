@@ -2,6 +2,12 @@
 pub enum Error {
     #[error(transparent)]
     Io(#[from] std::io::Error),
+
+    #[error(transparent)]
+    SystemTime(#[from] std::time::SystemTimeError),
+
+    #[error(transparent)]
+    SerdeJson(#[from] serde_json::Error),
 }
 
 // we must manually implement serde::Serialize

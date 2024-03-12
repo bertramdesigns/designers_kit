@@ -2,6 +2,7 @@ const tailwindcss = require('tailwindcss');
 const autoprefixer = require('autoprefixer');
 
 const config = {
+	parser: require('postcss-comment'),
 	plugins: [
 		//Some plugins, like tailwindcss/nesting, need to run before Tailwind,
 		tailwindcss(),

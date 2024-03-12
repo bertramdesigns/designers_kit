@@ -7,31 +7,25 @@ license = ""
 repository = ""
 default-run = "designers-toolkit"
 edition = "2021"
-rust-version = "1.60"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
-
 [build-dependencies]
-tauri-build = { version = "1.5.0", features = [] }
+tauri-build = { version = "2.0.0-beta", features = [] }
 
 [dependencies]
 serde = { version = "1.0", features = ["derive"] }
-tauri = { version = "1.5.3", features = [] }
-chrono = "0.4.31"
-dialog = "0.3.0"
-get_sys_info = "0.1.21"
-rar = "0.2.0"
-rust_search = "2.1.0"
-stopwatch = "0.0.7"
-unrar = "0.5.2"
-zip = "0.6.6"
-zip-extensions = "0.6.2"
+tauri = { version = "2.0.0-beta", features = [] }
+tauri-plugin-shell = "2.0.0-beta"
 poppler-utils-rs = { path = "/Users/dylanbertram/Dev/projects_opensource/rs-crates/poppler-utils-rs" }
 thiserror = "1.0.52"
 serde_json = "1.0"
-copy_dir = "0.1.3"
-open = "5.0.1"
-sevenz-rust = "0.5.4"
+chrono = "0.4.35"
+
+
+[target.'cfg(target_os = "macos")'.dependencies]
+macos-app-nap = "0.0"
+cocoa = "0.25"
+objc = "0.2"
 
 
 [features]
