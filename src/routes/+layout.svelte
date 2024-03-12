@@ -7,6 +7,10 @@
 	import { storePopup } from '@skeletonlabs/skeleton';
 	import { computePosition, autoUpdate, offset, shift, flip, arrow } from '@floating-ui/dom';
 
+	import FileExplorer from '$lib/components/FileExplorer.svelte';
+
+	import { windowStore } from '$lib/stores/windowStore';
+
 	import { page } from '$app/stores';
 
 	import { onMount } from 'svelte';
@@ -21,8 +25,9 @@
 	// https://phosphoricons.com/
 
 	import WindowTitleBar from '$lib/WindowTitleBar.svelte';
-	import WindowPanelRight from '$lib/WindowPanelRight.svelte';
+	import WindowPanel from '$lib/WindowPanel.svelte';
 	import WindowSidebar from '$lib/WindowSidebar.svelte';
+	import WindowSidebarPanel from '$lib/components/WindowSidebarPanel.svelte';
 
 	initializeStores();
 	const drawerStore = getDrawerStore();
@@ -38,10 +43,28 @@
 		<WindowTitleBar />
 	</svelte:fragment>
 	<svelte:fragment slot="sidebarLeft">
-		<WindowSidebar />
+		{#if $windowStore.sidebar.position === 'left'}
+			<WindowSidebar />
+		{/if}
+	</svelte:fragment>
+	<svelte:fragment slot="panelLeft">
+		<WindowPanel bind:toggleVar={$windowStore.panelLeft.show}>
+			<svelte:fragment slot="contents">
+				<WindowSidebarPanel />
+			</svelte:fragment>
+		</WindowPanel>
 	</svelte:fragment>
 	<svelte:fragment slot="sidebarRight">
-		<WindowPanelRight />
+		{#if $windowStore.sidebar.position === 'right'}
+			<WindowSidebar />
+		{/if}
+	</svelte:fragment>
+	<svelte:fragment slot="panelRight">
+		<WindowPanel bind:toggleVar={$windowStore.panelRight.show}>
+			<svelte:fragment slot="contents">
+				<FileExplorer />
+			</svelte:fragment>
+		</WindowPanel>
 	</svelte:fragment>
 
 	<slot />
