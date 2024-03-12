@@ -2,6 +2,28 @@
 
 This is a collection of commonly used open sourced projects for designers to utilize in their work.
 
+## Notes
+
+### Skeleton UI
+
+The root UI kit of this project is Skeleton UI. It is mostly a collection of basic components that can be used to build more complex components. The layout is locked to an AppShell structure that controls input events/states.
+
+Skeleton is committed to a repository with all components together as a monorepo (site, packages, etc.), meaning it is nested. There are a few components that need more work and some that need to be customized so I have a fork at bertramdesigns/skeleton#designers-kit that has been included as a submodule in `./packages/skeleton`. In the packages file, the nested `./packages/skeleton/packages/skeleton` folder is added to the `package.json` file as a dependency path.
+
+All the useful files can be found in `./packages/skeleton/packages/skeleton/src/lib`
+
+_Note_: the better way of this is is to use a solution like yarn workspaces. PNPM is releasing the feature in v9 so once it is stable, I will switch to it. [PNPM v9.0.0-alpha.1 notes](https://github.com/pnpm/pnpm/releases/tag/v9.0.0-alpha.1)
+
+**Updating the submodule**
+
+To pull updates:
+
+```bash
+git submodule update --init --recursive
+```
+
+Updates can also be pushed by editing the submodule and using source control to commit the changes.
+
 ## Included
 
 - PDF Tools (Utilizing [Poppler](https://poppler.freedesktop.org/))

@@ -1,0 +1,4 @@
+[submodule "packages/skeleton"]
+	path = packages/skeleton
+	url = https://github.com/bertramdesigns/skeleton.git
+	branch = designers-kit

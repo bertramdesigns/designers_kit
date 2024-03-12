@@ -7,12 +7,12 @@
         "label": "ui:dev",
         "type": "shell",
         "isBackground": true,
-        "command": "npm run tauri dev"
+        "command": "pnpm run tauri dev"
       },
       {
         "label": "ui:build",
         "type": "shell",
-        "command": "npm",
+        "command": "pnpm",
         "args": [
           "build"
         ]
