@@ -2,6 +2,8 @@
 
 This is a collection of commonly used open sourced projects for designers to utilize in their work.
 
+run `pnpm run tauri dev` to start the app.
+
 ## Notes
 
 ### Skeleton UI
@@ -13,6 +15,35 @@ Skeleton is committed to a repository with all components together as a monorepo
 All the useful files can be found in `./packages/skeleton/packages/skeleton/src/lib`
 
 _Note_: the better way of this is is to use a solution like yarn workspaces. PNPM is releasing the feature in v9 so once it is stable, I will switch to it. [PNPM v9.0.0-alpha.1 notes](https://github.com/pnpm/pnpm/releases/tag/v9.0.0-alpha.1)
+
+**Configuring package.json and vite.config.ts**
+
+The package is included by running
+
+```bash
+pnpm install --save-dev "./packages/skeleton/packages/skeleton"
+```
+
+This will add the following link to the package.json file:
+
+```json
+"devDependencies": {
+  	"@skeletonlabs/skeleton": "link:packages/skeleton/packages/skeleton",
+}
+```
+
+The submodule is seen as outside the project root path. To fix it the following should be added to vite's config file:
+
+```javascript
+// vite.config.js
+export default {
+	server: {
+		fs: {
+			allow: ['packages/skeleton/packages/skeleton']
+		}
+	}
+};
+```
 
 **Updating the submodule**
 
