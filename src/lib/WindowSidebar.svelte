@@ -1,54 +1,99 @@
-<script>
-	import { initializeStores } from '@skeletonlabs/skeleton';
-	import { AppShell, AppRail, AppRailAnchor, Drawer, getDrawerStore } from '@skeletonlabs/skeleton';
-	import { setInitialClassState, setModeCurrent } from '@skeletonlabs/skeleton'; // light/dark mode
-	import { storePopup } from '@skeletonlabs/skeleton';
-	import { computePosition, autoUpdate, offset, shift, flip, arrow } from '@floating-ui/dom';
+<script lang="ts">
+	import { AppRail, AppRailAnchor, AppRailTile } from '@skeletonlabs/skeleton';
 	import Icon from '@iconify/svelte';
 
-	import { page } from '$app/stores';
+	import { windowStore } from './stores/windowStore';
+
+	function sidebarTileToggle(activeTile: string) {
+		// If the active tile is already active, close the sidebar
+		if ($windowStore.sidebar.activeTile === activeTile) {
+			windowStore.setSidebarActiveTile('');
+			windowStore.togglePanelVis('left', false);
+			return;
+		}
+
+		// otherwise open and set the panel contents
+		windowStore.setSidebarActiveTile(activeTile);
+		windowStore.togglePanelVis('left', true);
+	}
 </script>
 
-<AppRail slotsidebarleft="bg-surface-500/5 w-56 p-4">
-	<svelte:fragment slot="lead">
-		<AppRailAnchor href="/" selected={$page.url.pathname === '/'}>
+<AppRail background="bg-surface-500/5" width="w-20">
+	<!-- 	<svelte:fragment slot="lead">
+		<AppRailTile
+			name="home"
+			regionLead="flex justify-center items-center"
+			on:click={() => sidebarTileToggle('home')}
+			bind:group={$windowStore.sidebar.activeTile}
+			value="home"
+		>
 			<svelte:fragment slot="lead"
 				><Icon icon="ph:house-line-duotone" style="font-size: 2em"></Icon></svelte:fragment
 			>
-		</AppRailAnchor>
-	</svelte:fragment>
+		</AppRailTile>
+	</svelte:fragment> -->
 	<!-- --- -->
-	<AppRailAnchor href="/research-tools" selected={$page.url.pathname === '/research-tools'}>
+	<AppRailTile
+		name="research-tools"
+		regionLead="flex justify-center items-center"
+		on:click={() => sidebarTileToggle('research-tools')}
+		bind:group={$windowStore.sidebar.activeTile}
+		value="research-tools"
+	>
 		<svelte:fragment slot="lead"
 			><Icon icon="ph:flask-duotone" style="font-size: 2em"></Icon></svelte:fragment
 		>
 		<span>Research</span>
-	</AppRailAnchor>
-	<AppRailAnchor href="/productivity-utils" selected={$page.url.pathname === '/productivity-utils'}>
+	</AppRailTile>
+	<AppRailTile
+		name="productivity-utils"
+		regionLead="flex justify-center items-center"
+		on:click={() => sidebarTileToggle('productivity-utils')}
+		bind:group={$windowStore.sidebar.activeTile}
+		value="productivity-utils"
+	>
 		<svelte:fragment slot="lead"
 			><Icon icon="ph:coffee-duotone" style="font-size: 2em"></Icon></svelte:fragment
 		>
 		<span>Productivity</span>
-	</AppRailAnchor>
-	<AppRailAnchor href="/creation-tools" selected={$page.url.pathname === '/creation-tools'}>
+	</AppRailTile>
+	<AppRailTile
+		name="creation-tools"
+		regionLead="flex justify-center items-center"
+		on:click={() => sidebarTileToggle('creation-tools')}
+		bind:group={$windowStore.sidebar.activeTile}
+		value="creation-tools"
+	>
 		<svelte:fragment slot="lead"
 			><Icon icon="ph:sparkle-duotone" style="font-size: 2em"></Icon></svelte:fragment
 		>
 		<span>Create</span>
-	</AppRailAnchor>
-	<AppRailAnchor href="/file-utils" selected={$page.url.pathname === '/file-utils'}>
+	</AppRailTile>
+	<AppRailTile
+		name="file-utils"
+		regionLead="flex justify-center items-center"
+		on:click={() => sidebarTileToggle('file-utils')}
+		bind:group={$windowStore.sidebar.activeTile}
+		value="file-utils"
+	>
 		<svelte:fragment slot="lead"
 			><Icon icon="ph:swap-duotone" style="font-size: 2em"></Icon></svelte:fragment
 		>
 		<span>File Utils</span>
-	</AppRailAnchor>
+	</AppRailTile>
 	<!-- --- -->
 	<svelte:fragment slot="trail">
-		<AppRailAnchor href="/settings" selected={$page.url.pathname === '/settings'}>
+		<AppRailTile
+			name="settings"
+			regionLead="flex justify-center items-center"
+			on:click={() => sidebarTileToggle('settings')}
+			bind:group={$windowStore.sidebar.activeTile}
+			value="settings"
+		>
 			<svelte:fragment slot="lead"
 				><Icon icon="ph:gear-duotone" style="font-size: 2em"></Icon></svelte:fragment
 			>
 			<span>Settings</span>
-		</AppRailAnchor>
+		</AppRailTile>
 	</svelte:fragment>
 </AppRail>
