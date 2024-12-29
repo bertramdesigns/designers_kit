@@ -1,35 +1,27 @@
 [package]
-name = "designers-toolkit"
+name = "designers-kit"
 version = "0.1.0"
 description = "Toolkit for day-to-day designer tasks."
-authors = ["you"]
-license = ""
-repository = ""
-default-run = "designers-toolkit"
+authors = ["Dylan Bertram"]
 edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[lib]
+# The `_lib` suffix may seem redundant but it is necessary
+# to make the lib name unique and wouldn't conflict with the bin name.
+# This seems to be only an issue on Windows, see https://github.com/rust-lang/cargo/issues/8519
+name = "designers_kit_lib"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
 [build-dependencies]
-tauri-build = { version = "2.0.0-beta", features = [] }
+tauri-build = { version = "2", features = [] }
 
 [dependencies]
-serde = { version = "1.0", features = ["derive"] }
-tauri = { version = "2.0.0-beta", features = [] }
-tauri-plugin-shell = "2.0.0-beta"
-poppler-utils-rs = { path = "/Users/dylanbertram/Dev/projects_opensource/rs-crates/poppler-utils-rs" }
-thiserror = "1.0.52"
-serde_json = "1.0"
-chrono = "0.4.35"
-
+tauri = { version = "2", features = [] }
+tauri-plugin-opener = "2"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
 
 [target.'cfg(target_os = "macos")'.dependencies]
-macos-app-nap = "0.0"
-cocoa = "0.25"
-objc = "0.2"
-
-
-[features]
-# this feature is used for production builds or when `devPath` points to the filesystem and the built-in dev server is disabled.
-# If you use cargo directly instead of tauri's cli you can use this feature flag to switch between tauri's `dev` and `build` modes.
-# DO NOT REMOVE!!
-custom-protocol = ["tauri/custom-protocol"]
+cocoa = "0.26.0"

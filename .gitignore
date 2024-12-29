@@ -12,3 +12,6 @@ vite.config.ts.timestamp-*
 # temp folders
 todo/
 _ref/
+
+# big ai models
+src-tauri/hugging_face_models/
