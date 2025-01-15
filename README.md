@@ -9,6 +9,7 @@ This is a collection of commonly used open sourced projects for designers to uti
 - [Storybook Docs](#storybook)
 - [Vitest Docs](#vitest)
 - [Tauri Docs](#tauri)
+- [Appwrite Docs](#appwrite)
 
 ## Cheatsheet
 
@@ -191,3 +192,33 @@ It is good to note that as soon as "invoke" is used to call the Rust backend, th
 ### Configuration
 
 `data-tauri-drag-region` can be added to html tags to make a region that drags the entire window. The `core:window:allow-start-dragging` has been added to `./src-tauri/capabilities/default.json` to allow this.
+
+## Appwrite
+
+Appwrite is the backend for the project. It is configured to be self-hosted using Docker. The server is started with `pnpm run appwrite:start` and can be accessed at [localhost:80](http://localhost:80/) or [localhost/console](http://localhost/console) for the console.
+
+For convenience, tooling has been added to initialize the server with the correct configurations. This is done with `pnpm run appwrite:init`.
+
+### Initialization
+
+A script has been created to initialize the database with the necessary teams, collections, attributes, documents, and permissions. When adding/changing fields, the script needs to be updated. If it is not, the next rebuild will not have changes made in the Appwrite console.
+
+All the configurations are stored in `./appwrite/appwrite.json` and the scripts are found in `./appwrite/scripts/`.
+
+**Before running**
+
+- Update all the .env files with the correct credentials
+  - `./appwrite/.env`
+  - `./.env`
+- Start the Appwrite server with `pnpm run appwrite:start`
+- Run the initialization script with `pnpm run appwrite:init`
+
+This script is run with `pnpm run appwrite:db:init`. The script is located in `./appwrite/init.ts`.
+
+When running appwrite:init it will run the script then unmount it.
+
+#### Database Collections/Atrributes/Documents/Permissions
+
+#### Environment Variables
+
+To add new environment variables, add them to the `./.env` (NOT `./appwrite/.env` for now). These can be imported using `import.meta.env.VARIABLE_NAME` and should be prefixed with `VITE_` to be available in the browser.
