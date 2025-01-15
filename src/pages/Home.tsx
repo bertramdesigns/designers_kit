@@ -13,12 +13,16 @@ function Home() {
   }
 
   return (
-    <>
-      <h1>Welcome to Tauri + Solid</h1>
-      <p>Click on the Tauri, Vite, and Solid logos to learn more.</p>
+    <div class="flex flex-col justify-between space-y-8">
+      <div class="flex flex-col w-full space-y-1">
+        <h2 class="text-2xl font-bold tracking-tight">Designer's Kit</h2>
+        <p class="text-muted-foreground">
+          A hodgepodge of components and utilities for my work.
+        </p>
+      </div>
 
       <form
-        class="row"
+        class=" flex flex-row"
         onSubmit={(e) => {
           e.preventDefault();
           greet();
@@ -35,7 +39,7 @@ function Home() {
         <Button type="submit">Greet</Button>
       </form>
       <p>{greetMsg()}</p>
-    </>
+    </div>
   );
 }
 

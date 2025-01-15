@@ -1,5 +1,5 @@
 import { authState, login, logout, register } from "./authStore";
-import { todoState, fetchTodos, addTodo, updateTodo, deleteTodo } from "./todoStore";
+import { taskState, fetchTasks, addTask, updateTask, deleteTask } from "./todoStore";
 
 export const store = {
     auth: {
@@ -9,10 +9,10 @@ export const store = {
         register,
     },
     todo: {
-        state: todoState,
-        fetchTodos,
-        addTodo,
-        updateTodo,
-        deleteTodo,
+        state: taskState,
+        fetchTasks,
+        addTask,
+        updateTask,
+        deleteTask,
     },
 };

@@ -1,5 +1,5 @@
 import { createStore } from "solid-js/store";
-import { Client, Account } from "appwrite";
+import { Client, Databases, Account, Models } from "appwrite";
 import { ID } from 'appwrite';
 
 const client = new Client()
@@ -7,13 +7,18 @@ const client = new Client()
     .setProject(import.meta.env.VITE_APPWRITE_PROJECT_ID); // Project ID
 
 const account = new Account(client);
+const databases = new Databases(client);
 
 interface AuthState {
-    user: any;
+    client: Client;
+    databases: Databases;
+    user: Models.User<Models.Preferences> | null;
     isAuthenticated: boolean;
 }
 
 const [authState, setAuthState] = createStore<AuthState>({
+    client: client,
+    databases: databases,
     user: null,
     isAuthenticated: false,
 });

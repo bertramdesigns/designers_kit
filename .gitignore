@@ -15,3 +15,6 @@ _ref/
 
 # big ai models
 src-tauri/hugging_face_models/
+
+# build artifacts
+appwrite.json

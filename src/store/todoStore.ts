@@ -1,72 +1,108 @@
 import { createStore } from "solid-js/store";
-import { Client, Databases, ID } from "appwrite";
+import { ID, Role, Permission } from "appwrite";
+import { authState } from "./authStore";
 
-const client = new Client()
-    .setEndpoint(import.meta.env.VITE_APPWRITE_ENDPOINT) // Appwrite Endpoint
-    .setProject(import.meta.env.VITE_APPWRITE_PROJECT_ID); // project ID
 
-const databases = new Databases(client);
 
-interface Todo {
-    id: string;
+export type Task = {
+    taskid: string;
     title: string;
-    completed: boolean;
+    status: string;
+    label: string;
+    priority: string;
+};
+
+interface TaskState {
+    tasks: Task[];
 }
 
-interface TodoState {
-    todos: Todo[];
-}
-
-const [todoState, setTodoState] = createStore<TodoState>({
-    todos: [],
+const [taskState, setTaskState] = createStore<TaskState>({
+    tasks: [],
 });
 
-const fetchTodos = async () => {
-    const response = await databases.listDocuments(import.meta.env.VITE_APPWRITE_DATABASE_ID,
-        import.meta.env.VITE_APPWRITE_COLLECTION_ID);
-    const todos = response.documents.map((doc: any) => ({
-        id: doc.$id,
-        title: doc.title,
-        completed: doc.completed,
-    }));
-    setTodoState("todos", todos);
-};
-
-const addTodo = async (title: string) => {
-    const response = await databases.createDocument(
+const fetchTasks = async () => {
+    let tasks: Task[] = [];
+    const promise = authState.databases.listDocuments(
         import.meta.env.VITE_APPWRITE_DATABASE_ID,
-        import.meta.env.VITE_APPWRITE_COLLECTION_ID,
-        ID.unique(),
-        {
-            title,
-            completed: false,
-        }
+        import.meta.env.VITE_APPWRITE_TASKS_COLLECTION_ID,
+        // TODO: query for workspace
+        // [ Query.equal("workspace", workspace) ]
     );
-    const newTodo: Todo = {
-        id: response.$id,
-        title: response.title,
-        completed: response.completed,
-    };
-    setTodoState("todos", [...todoState.todos, newTodo]);
+
+    promise.then((response) => {
+        console.log(response);
+        tasks = response.documents.map((doc: any) => ({
+            taskid: doc.taskid,
+            title: doc.title,
+            status: doc.completed,
+            label: doc.label,
+            priority: doc.priority,
+        }));
+    }, (error) => {
+        console.log(error);
+    });
+
+    // const tasks = response.documents.map((doc: any) => ({
+    //     id: doc.$id,
+    //     title: doc.title,
+    //     status: doc.completed,
+    //     label: doc.label,
+    //     priority: doc.priority,
+    // }));
+    setTaskState("tasks", tasks);
 };
 
-const updateTodo = async (id: string, completed: boolean) => {
-    const response = await databases.updateDocument(import.meta.env.VITE_APPWRITE_DATABASE_ID,
-        import.meta.env.VITE_APPWRITE_COLLECTION_ID, id, {
+const addTask = async (task: Task) => {
+    // check if authState.user is null. Unauthorized user should not be able to add tasks
+    if (!authState.user) {
+        return;
+    }
+
+    const response = await authState.databases.createDocument(
+        import.meta.env.VITE_APPWRITE_DATABASE_ID,
+        import.meta.env.VITE_APPWRITE_TASKS_COLLECTION_ID,
+        ID.unique(),
+        task,
+        [
+            Permission.read(Role.user(authState.user.$id)),    // Only this user can read
+            Permission.update(Role.user(authState.user.$id)),  // Only this user can update
+            Permission.delete(Role.user(authState.user.$id))   // Only this user can delete
+        ]
+    );
+    const newTask: Task = {
+        taskid: response.taskid,
+        title: response.title,
+        status: response.completed,
+        label: response.label,
+        priority: response.priority,
+    };
+    setTaskState("tasks", [...taskState.tasks, newTask]);
+};
+
+const updateTask = async (id: string, completed: boolean) => {
+    const response = await authState.databases.updateDocument(
+        import.meta.env.VITE_APPWRITE_DATABASE_ID,
+        import.meta.env.VITE_APPWRITE_TASKS_COLLECTION_ID,
+        id, {
         completed,
     });
-    const updatedTodo: Todo = {
-        id: response.$id,
+    const updatedTask: Task = {
+        taskid: response.taskid,
         title: response.title,
-        completed: response.completed,
+        status: response.completed,
+        label: response.label,
+        priority: response.priority,
     };
-    setTodoState("todos", (todos) => todos.map((todo) => (todo.id === id ? updatedTodo : todo)));
+    setTaskState("tasks", (tasks) => tasks.map((task) => (task.taskid === id ? updatedTask : task)));
 };
 
-const deleteTodo = async (id: string) => {
-    await databases.deleteDocument(import.meta.env.VITE_APPWRITE_DATABASE_ID,
-        import.meta.env.VITE_APPWRITE_COLLECTION_ID, id);
-    setTodoState("todos", (todos) => todos.filter((todo) => todo.id !== id));
+const deleteTask = async (id: string) => {
+    await authState.databases.deleteDocument(
+        import.meta.env.VITE_APPWRITE_DATABASE_ID,
+        import.meta.env.VITE_APPWRITE_TASKS_COLLECTION_ID,
+        id
+    );
+    setTaskState("tasks", (tasks) => tasks.filter((task) => task.taskid !== id));
 };
 
-export { todoState, fetchTodos, addTodo, updateTodo, deleteTodo };
+export { taskState, fetchTasks, updateTask, deleteTask, addTask };
