@@ -3,7 +3,7 @@
     "databases": [
         {
             "$id": "${VITE_APPWRITE_DATABASE_ID}",
-            "name": "songs",
+            "name": "Group",
             "$createdAt": "2023-07-01T18:35:27.802+00:00",
             "$updatedAt": "2023-08-01T21:41:41.663+00:00",
             "enabled": true
@@ -11,70 +11,66 @@
     ],
     "collections": [
         {
-            "$id": "${VITE_APPWRITE_TASKS_COLLECTION_ID}",
+            "$id": "${unique}",
             "$permissions": [
-                "create(\"any\")",
+                "create(\"users\")",
                 "read(\"any\")",
-                "update(\"any\")",
-                "delete(\"any\")"
+                "update(\"users\")",
+                "delete(\"users\")"
             ],
             "databaseId": "${VITE_APPWRITE_DATABASE_ID}",
-            "name": "music",
+            "name": "team_workspaces",
             "enabled": true,
             "documentSecurity": false,
             "attributes": [
-                {
-                    "key": "userID",
-                    "type": "string",
-                    "status": "available",
-                    "error": "",
-                    "required": false,
-                    "array": false,
-                    "size": 100,
-                    "default": null
-                },
                 {
                     "key": "name",
                     "type": "string",
                     "status": "available",
                     "error": "",
-                    "required": false,
+                    "required": true,
                     "array": false,
                     "size": 100,
                     "default": null
                 },
                 {
-                    "key": "cloudinaryId",
+                    "key": "description",
+                    "type": "string",
+                    "stataus": "available",
+                    "error": "",
+                    "required": false,
+                    "array": false,
+                    "size": 500,
+                    "default": null
+                }
+            ],
+            "indexes": []
+        },
+        {
+            "$id": "${VITE_APPWRITE_WORKSPACE_1_TASKS_COLLECTION_ID}",
+            "$permissions": [
+                "create(\"users\")",
+                "read(\"any\")",
+                "update(\"users\")",
+                "delete(\"users\")"
+            ],
+            "databaseId": "${VITE_APPWRITE_DATABASE_ID}",
+            "name": "workspace_1_tasks",
+            "enabled": true,
+            "documentSecurity": false,
+            "attributes": [
+                {
+                    "key": "title",
                     "type": "string",
                     "status": "available",
                     "error": "",
-                    "required": false,
+                    "required": true,
                     "array": false,
                     "size": 100,
                     "default": null
                 },
                 {
-                    "key": "user",
-                    "type": "string",
-                    "status": "available",
-                    "error": "",
-                    "required": false,
-                    "array": false,
-                    "size": 100,
-                    "default": null
-                },
-                {
-                    "key": "audio",
-                    "type": "string",
-                    "status": "available",
-                    "error": "",
-                    "required": false,
-                    "array": false,
-                    "size": 200,
-                    "default": null
-                },
-                {
-                    "key": "genre",
+                    "key": "description",
                     "type": "string",
                     "status": "available",
                     "error": "",
@@ -84,13 +80,99 @@
                     "default": null
                 },
                 {
-                    "key": "artist",
+                    "key": "status",
                     "type": "string",
+                    "status": "available",
+                    "error": "",
+                    "required": true,
+                    "array": false,
+                    "size": 50,
+                    "default": null
+                },
+                {
+                    "key": "assignedTo",
+                    "type": "string",
+                    "status": "available",
+                    "error": "",
+                    "required": true,
+                    "array": false,
+                    "size": 100,
+                    "default": null
+                },
+                {
+                    "key": "dueDate",
+                    "type": "datetime",
                     "status": "available",
                     "error": "",
                     "required": false,
                     "array": false,
-                    "size": 500,
+                    "size": 100,
+                    "default": null
+                }
+            ],
+            "indexes": []
+        },
+        {
+            "$id": "${VITE_APPWRITE_WORKSPACE_1_TIME_ENTRIES_COLLECTION_ID}",
+            "$permissions": [
+                "create(\"users\")",
+                "read(\"any\")",
+                "update(\"users\")",
+                "delete(\"users\")"
+            ],
+            "databaseId": "${VITE_APPWRITE_DATABASE_ID}",
+            "name": "workspace_1_timeEntries",
+            "enabled": true,
+            "documentSecurity": false,
+            "attributes": [
+                {
+                    "key": "taskId",
+                    "type": "string",
+                    "status": "available",
+                    "error": "",
+                    "required": true,
+                    "array": false,
+                    "size": 100,
+                    "default": null
+                },
+                {
+                    "key": "userId",
+                    "type": "string",
+                    "status": "available",
+                    "error": "",
+                    "required": true,
+                    "array": false,
+                    "size": 100,
+                    "default": null
+                },
+                {
+                    "key": "startTime",
+                    "type": "datetime",
+                    "status": "available",
+                    "error": "",
+                    "required": true,
+                    "array": false,
+                    "size": 100,
+                    "default": null
+                },
+                {
+                    "key": "endTime",
+                    "type": "datetime",
+                    "status": "available",
+                    "error": "",
+                    "required": true,
+                    "array": false,
+                    "size": 100,
+                    "default": null
+                },
+                {
+                    "key": "duration",
+                    "type": "integer",
+                    "status": "available",
+                    "error": "",
+                    "required": true,
+                    "array": false,
+                    "size": 100,
                     "default": null
                 }
             ],

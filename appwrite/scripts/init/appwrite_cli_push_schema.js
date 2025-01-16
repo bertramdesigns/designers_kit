@@ -43,7 +43,7 @@ const spawnCommand = (command, args) => {
 const loginArgs = ['login', '--endpoint', process.env.VITE_APPWRITE_ENDPOINT, '--email', process.env.DEFAULT_ADMIN_EMAIL, '--password', process.env.DEFAULT_ADMIN_PASSWORD];
 // const initProjectArgs = ['init', 'project', '--organization-id', process.env.DEFAULT_ORG_ID, '--project-id', process.env.VITE_APPWRITE_PROJECT_ID, '--project-name', `Designer's Kit`];
 const initProjectArgs = ['projects', 'create', '--project-id', process.env.VITE_APPWRITE_PROJECT_ID, '--team-id', process.env.DEFAULT_ORG_ID, '--name', `Designer's Kit`];
-const pushSchemaArgs = ['push', 'all', '--all'];
+const pushSchemaArgs = ['push', 'all', '--all', '--verbose'];
 const addPlatformArgs = ['projects', 'create-platform', '--project-id', process.env.VITE_APPWRITE_PROJECT_ID, '--type', 'web', '--name', `Designer's Kit Web`, '--hostname', process.env._APP_DOMAIN];
 
 // Execute the commands
