@@ -193,6 +193,15 @@ It is good to note that as soon as "invoke" is used to call the Rust backend, th
 
 `data-tauri-drag-region` can be added to html tags to make a region that drags the entire window. The `core:window:allow-start-dragging` has been added to `./src-tauri/capabilities/default.json` to allow this.
 
+### Plugins
+
+#### Store
+
+[overview docs](https://v2.tauri.app/plugin/store/)
+[api docs](https://v2.tauri.app/reference/javascript/store/)
+
+This app uses the store plugin to manage state. It is a simple key-value store that can be accessed from the frontend and backend. In the future, I would like to encrypt the store to prevent data leakage for more sensitive projects.
+
 ## Appwrite
 
 Appwrite is the backend for the project. It is configured to be self-hosted using Docker. The server is started with `pnpm run appwrite:start` and can be accessed at [localhost:80](http://localhost:80/) or [localhost/console](http://localhost/console) for the console.
