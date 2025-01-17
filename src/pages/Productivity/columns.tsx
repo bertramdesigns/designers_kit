@@ -5,7 +5,6 @@ import type { ColumnDef } from "@tanstack/solid-table";
 import { Badge } from "~/components/solidui/badge";
 import { Checkbox } from "~/components/solidui/checkbox";
 
-import type { Task } from "~/store/todoStore";
 import { TableColumnHeader } from "~/components/dkui/dataTable/table-column-header";
 import { TableRowActions } from "~/components/dkui/dataTable/table-row-actions";
 
@@ -118,7 +117,9 @@ export const columns: ColumnDef<Task>[] = [
     ),
     cell: (props) => {
       const label = () =>
-        labels.find((label) => label.value === props.row.original.label);
+        labels.find((label) =>
+          props.row.original.labels?.includes(label.value)
+        );
 
       return (
         <div class="flex space-x-2">

@@ -19,7 +19,8 @@ import { createSignal } from "solid-js";
 import { labels, priorities, statuses } from "./columns";
 import { Combobox } from "~/components/dkui/combobox";
 
-import { addTask, type Task } from "~/store/todoStore";
+import { addTask } from "~/store/taskStore";
+import { authState } from "~/store/authStore";
 
 type AddTaskModalProps = {
   onTaskAdded: () => void;
@@ -30,8 +31,11 @@ export function AddTaskModal(props: AddTaskModalProps) {
     taskid: "",
     title: "",
     status: "",
-    label: "",
+    labels: [],
     priority: "",
+    startDate: new Date(),
+    dueDate: new Date(),
+    assignedTo: [authState.user?.$id],
   });
 
   const handleSave = async () => {
@@ -97,7 +101,7 @@ export function AddTaskModal(props: AddTaskModalProps) {
               listItems={labels}
               class="col-span-3"
               onChange={(value) =>
-                setTask({ ...task(), label: value ? value.value : "" })
+                setTask({ ...task(), labels: value ? [value.value] : [] })
               }
             />
           </TextField>

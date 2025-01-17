@@ -24,6 +24,16 @@
             "documentSecurity": false,
             "attributes": [
                 {
+                    "key": "workspaceid",
+                    "type": "string",
+                    "status": "available",
+                    "error": "",
+                    "required": true,
+                    "array": false,
+                    "size": 36,
+                    "default": null
+                },
+                {
                     "key": "name",
                     "type": "string",
                     "status": "available",
@@ -60,11 +70,21 @@
             "documentSecurity": false,
             "attributes": [
                 {
-                    "key": "title",
+                    "key": "taskid",
                     "type": "string",
                     "status": "available",
                     "error": "",
                     "required": true,
+                    "array": false,
+                    "size": 36,
+                    "default": null
+                },
+                {
+                    "key": "title",
+                    "type": "string",
+                    "status": "available",
+                    "error": "",
+                    "required": false,
                     "array": false,
                     "size": 100,
                     "default": null
@@ -90,11 +110,31 @@
                     "default": null
                 },
                 {
-                    "key": "assignedTo",
+                    "key": "labels",
                     "type": "string",
                     "status": "available",
                     "error": "",
-                    "required": true,
+                    "required": false,
+                    "array": true,
+                    "size": 50,
+                    "default": null
+                },
+                {
+                    "key": "priority",
+                    "type": "string",
+                    "status": "available",
+                    "error": "",
+                    "required": false,
+                    "array": false,
+                    "size": 50,
+                    "default": null
+                },
+                {
+                    "key": "startDate",
+                    "type": "datetime",
+                    "status": "available",
+                    "error": "",
+                    "required": false,
                     "array": false,
                     "size": 100,
                     "default": null
@@ -106,6 +146,16 @@
                     "error": "",
                     "required": false,
                     "array": false,
+                    "size": 100,
+                    "default": null
+                },
+                {
+                    "key": "assignedTo",
+                    "type": "string",
+                    "status": "available",
+                    "error": "",
+                    "required": true,
+                    "array": true,
                     "size": 100,
                     "default": null
                 }
