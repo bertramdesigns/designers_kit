@@ -2,21 +2,7 @@ import { createStore } from "solid-js/store";
 import { ID, Role, Permission } from "appwrite";
 import { authState } from "./authStore";
 
-
-
-export type Task = {
-    taskid: string;
-    title: string;
-    status: string;
-    label: string;
-    priority: string;
-};
-
-interface TaskState {
-    tasks: Task[];
-}
-
-const [taskState, setTaskState] = createStore<TaskState>({
+const [taskStore, setTaskStore] = createStore<TaskState>({
     tasks: [],
 });
 
@@ -24,24 +10,26 @@ const fetchTasks = async () => {
     let tasks: Task[] = [];
     const promise = authState.databases.listDocuments(
         import.meta.env.VITE_APPWRITE_DATABASE_ID,
-        import.meta.env.VITE_APPWRITE_TASKS_COLLECTION_ID,
+        import.meta.env.VITE_APPWRITE_WORKSPACE_1_TASKS_COLLECTION_ID,
         // TODO: query for workspace
         // [ Query.equal("workspace", workspace) ]
     );
 
     promise.then((response) => {
-        console.log(response);
         tasks = response.documents.map((doc: any) => ({
-            taskid: doc.taskid,
+            taskid: doc.$id,
             title: doc.title,
             status: doc.completed,
-            label: doc.label,
+            labels: doc.labels,
             priority: doc.priority,
+            startDate: doc.startDate,
+            dueDate: doc.dueDate,
+            assignedTo: doc.assignedTo,
         }));
+        setTaskStore("tasks", tasks);
     }, (error) => {
         console.log(error);
     });
-
     // const tasks = response.documents.map((doc: any) => ({
     //     id: doc.$id,
     //     title: doc.title,
@@ -49,7 +37,6 @@ const fetchTasks = async () => {
     //     label: doc.label,
     //     priority: doc.priority,
     // }));
-    setTaskState("tasks", tasks);
 };
 
 const addTask = async (task: Task) => {
@@ -60,7 +47,7 @@ const addTask = async (task: Task) => {
 
     const response = await authState.databases.createDocument(
         import.meta.env.VITE_APPWRITE_DATABASE_ID,
-        import.meta.env.VITE_APPWRITE_TASKS_COLLECTION_ID,
+        import.meta.env.VITE_APPWRITE_WORKSPACE_1_TASKS_COLLECTION_ID,
         ID.unique(),
         task,
         [
@@ -73,10 +60,13 @@ const addTask = async (task: Task) => {
         taskid: response.taskid,
         title: response.title,
         status: response.completed,
-        label: response.label,
+        labels: response.labels,
         priority: response.priority,
+        startDate: response.startDate,
+        dueDate: response.dueDate,
+        assignedTo: response.assignedTo,
     };
-    setTaskState("tasks", [...taskState.tasks, newTask]);
+    setTaskStore("tasks", (tasks) => [...tasks, newTask]);
 };
 
 const updateTask = async (id: string, completed: boolean) => {
@@ -90,10 +80,14 @@ const updateTask = async (id: string, completed: boolean) => {
         taskid: response.taskid,
         title: response.title,
         status: response.completed,
-        label: response.label,
+        labels: response.labels,
         priority: response.priority,
+        startDate: response.startDate,
+        dueDate: response.dueDate,
+        assignedTo: response.assignedTo,
+
     };
-    setTaskState("tasks", (tasks) => tasks.map((task) => (task.taskid === id ? updatedTask : task)));
+    setTaskStore("tasks", (tasks) => tasks.map((task) => (task.taskid === id ? updatedTask : task)));
 };
 
 const deleteTask = async (id: string) => {
@@ -102,7 +96,7 @@ const deleteTask = async (id: string) => {
         import.meta.env.VITE_APPWRITE_TASKS_COLLECTION_ID,
         id
     );
-    setTaskState("tasks", (tasks) => tasks.filter((task) => task.taskid !== id));
+    setTaskStore("tasks", (tasks) => tasks.filter((task) => task.taskid !== id));
 };
 
-export { taskState, fetchTasks, updateTask, deleteTask, addTask };
+export { taskStore, fetchTasks, updateTask, deleteTask, addTask };
