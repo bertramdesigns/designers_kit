@@ -16,26 +16,28 @@ import {
 } from "~/components/solidui/text-field";
 
 import { createSignal } from "solid-js";
-import { labels, priorities, statuses } from "./columns";
+import { labels, priorities, statuses } from "./dataTable/columns";
 import { Combobox } from "~/components/dkui/combobox";
 
 import { addTask } from "~/store/taskStore";
 import { authState } from "~/store/authStore";
 
-type AddTaskModalProps = {
+type TaskModalProps = {
   onTaskAdded: () => void;
 };
 
-export function AddTaskModal(props: AddTaskModalProps) {
+export function TaskModal(props: TaskModalProps) {
   const [task, setTask] = createSignal<Task>({
+    $id: undefined,
     taskid: "",
     title: "",
-    status: "",
+    status: "todo",
     labels: [],
-    priority: "",
+    priority: undefined,
     startDate: new Date(),
     dueDate: new Date(),
     assignedTo: [authState.user?.$id],
+    createdBy: authState.user?.$id,
   });
 
   const handleSave = async () => {
@@ -111,7 +113,10 @@ export function AddTaskModal(props: AddTaskModalProps) {
               listItems={priorities}
               class="col-span-3"
               onChange={(value) =>
-                setTask({ ...task(), priority: value ? value.value : "" })
+                setTask({
+                  ...task(),
+                  priority: value ? value.value : undefined,
+                })
               }
             />
           </TextField>
