@@ -6,7 +6,7 @@ const ID = require('../random_id/id.cjs');
 dotenv.config({ path: './.env' });
 
 // Read the template file
-const templatePath = './appwrite/template.appwrite.json';
+const templatePath = './template.appwrite.json';
 const template = fs.readFileSync(templatePath, 'utf8');
 
 // Replace placeholders with environment variables
