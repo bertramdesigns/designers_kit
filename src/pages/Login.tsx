@@ -1,5 +1,5 @@
 import { createSignal, Switch, Match } from "solid-js";
-import { login, logout, register, getUser, authState } from "~/store/authStore";
+import { login, logout, register, authState } from "~/store/authStore";
 import {
   TextField,
   TextFieldLabel,
@@ -90,7 +90,7 @@ const App = () => {
       </Match>
       <Match when={authState.isAuthenticated}>
         <div>
-          <p>Logged in as {getUser().name}</p>
+          <p>Logged in as {authState.user?.name}</p>
           <button onClick={handleLogout}>Logout</button>
         </div>
       </Match>

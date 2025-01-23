@@ -1,31 +1,31 @@
 import { Combobox as ComboboxPrimitive } from "@kobalte/core/combobox";
 import { FaSolidCheck, FaSolidCaretDown } from "solid-icons/fa";
-import { Component, ComponentProps, splitProps, mergeProps } from "solid-js";
+import { ComponentProps, splitProps, mergeProps } from "solid-js";
 import { cn } from "~/lib/utils";
 
-export interface ComboboxItem {
+export interface ComboboxItem<TValue> {
   label: string;
-  value: string;
+  value: TValue;
 }
 
-type ComboboxProps = Omit<ComponentProps<"div">, "onChange"> & {
+type ComboboxProps<TValue> = Omit<ComponentProps<"div">, "onChange"> & {
   class?: string | undefined;
   ariaLabel?: string | undefined;
-  listItems?: ComboboxItem[];
-  onChange?: (value: ComboboxItem | undefined) => void;
+  listItems?: ComboboxItem<TValue>[];
+  onChange?: (value: ComboboxItem<TValue> | undefined) => void;
 };
 
-const Combobox: Component<ComboboxProps> = (rawProps) => {
-  const props = mergeProps<ComboboxProps[]>(
+const Combobox = <TValue,>(rawProps: ComboboxProps<TValue>) => {
+  const props = mergeProps<ComboboxProps<TValue>[]>(
     {
       listItems: [
         {
           label: "Apple",
-          value: "apple",
+          value: "apple" as TValue,
         },
         {
           label: "Banana",
-          value: "banana",
+          value: "banana" as TValue,
         },
       ],
     },
@@ -40,7 +40,7 @@ const Combobox: Component<ComboboxProps> = (rawProps) => {
 
   return (
     <ComboboxPrimitive
-      options={local.listItems as ComboboxItem[]}
+      options={local.listItems as ComboboxItem<TValue>[]}
       optionValue="value"
       optionTextValue="label"
       optionLabel="label"

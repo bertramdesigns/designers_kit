@@ -1,5 +1,5 @@
 import { createStore } from "solid-js/store";
-import { Client, Account } from "appwrite";
+import { Client, Databases, Account } from "appwrite";
 import { ID } from 'appwrite';
 
 const client = new Client()
@@ -7,14 +7,29 @@ const client = new Client()
     .setProject(import.meta.env.VITE_APPWRITE_PROJECT_ID); // Project ID
 
 const account = new Account(client);
-
-interface AuthState {
-    user: any;
-    isAuthenticated: boolean;
-}
+const databases = new Databases(client);
 
 const [authState, setAuthState] = createStore<AuthState>({
-    user: null,
+    client: client,
+    databases: databases,
+    user: {
+        $id: ID.unique(),
+        $createdAt: new Date().toISOString(),
+        $updatedAt: new Date().toISOString(),
+        name: "",
+        registration: "",
+        status: false,
+        passwordUpdate: new Date().toISOString(),
+        email: "",
+        phone: "",
+        emailVerification: false,
+        phoneVerification: false,
+        prefs: {},
+        labels: [],
+        mfa: false,
+        targets: [],
+        accessedAt: ""
+    },
     isAuthenticated: false,
 });
 
@@ -38,15 +53,16 @@ const isUserLoggedIn = async () => {
         setAuthState({ user, isAuthenticated: true });
         return true;
     } catch (error) {
-        setAuthState({ user: null, isAuthenticated: false });
+        setAuthState({ isAuthenticated: false });
         return false;
     }
 }
 
+// TODO: This will need to stem a local storage database with a new userID
 const logout = async () => {
     try {
         await account.deleteSession("current");
-        setAuthState({ user: null, isAuthenticated: false });
+        setAuthState({ isAuthenticated: false });
     } catch (error) {
         console.error("Logout failed", error);
     }
@@ -54,7 +70,7 @@ const logout = async () => {
 
 const register = async (email: string, password: string, name: string) => {
     try {
-        await account.create(ID.unique(), email, password, name);
+        await account.create(authState.user.$id, email, password, name);
         await login(email, password);
     } catch (error) {
         console.error("Registration failed", error);

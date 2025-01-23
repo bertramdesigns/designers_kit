@@ -8,10 +8,13 @@ node_modules
 !.env.example
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
+licenses.json
 
 # temp folders
-todo/
 _ref/
 
 # big ai models
 src-tauri/hugging_face_models/
+
+# build artifacts
+appwrite.json

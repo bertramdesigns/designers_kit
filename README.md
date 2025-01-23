@@ -9,14 +9,15 @@ This is a collection of commonly used open sourced projects for designers to uti
 - [Storybook Docs](#storybook)
 - [Vitest Docs](#vitest)
 - [Tauri Docs](#tauri)
+- [Appwrite Docs](#appwrite)
 
 ## Cheatsheet
 
 **Appwrite** - NoSQL database
 `pnpm run appwrite:start` to start the Appwrite server.
+`pnpm run appwrite:init` to initialize the Appwrite server.
 [Appwrite Console](http://localhost:80/)
-Credentials can be found in `./appwrite/.env`
-Username: `admin`
+Credentials can be found in `./.env`
 
 **Tauri** - Desktop app framework
 `pnpm run tauri dev` to start the app.
@@ -31,14 +32,6 @@ Username: `admin`
 
 **Vitest** - Functional & logic testing framework
 `pnpm run test` to run tests.
-
-## General notes
-
-**errors when using `pnpm dlx`**
-
-I am using NVM to mangage my node versions. Sometimes weird things happen and I need to reset the node version. The system default is 18.15.0, but the projects use v20 and up so make sure the right version is set with `nvm list` (to see installed versions) and `nvm use 21.4.0` (to set the version).
-
-Note: bash doesn't have nvm in the path so you need to use `source ~/.nvm/nvm.sh` to load it in.
 
 ---
 
@@ -191,3 +184,44 @@ It is good to note that as soon as "invoke" is used to call the Rust backend, th
 ### Configuration
 
 `data-tauri-drag-region` can be added to html tags to make a region that drags the entire window. The `core:window:allow-start-dragging` has been added to `./src-tauri/capabilities/default.json` to allow this.
+
+### Plugins
+
+#### Store
+
+[overview docs](https://v2.tauri.app/plugin/store/)
+[api docs](https://v2.tauri.app/reference/javascript/store/)
+
+This app uses the store plugin to manage state. It is a simple key-value store that can be accessed from the frontend and backend. In the future, I would like to encrypt the store to prevent data leakage for more sensitive projects.
+
+If you need to inspect the output files, they are located in (on mac) `/your-user-directory/Library/Application Support/com.designers-kit/`. The come is set in `./src-tauri/tauri.conf.json`.
+
+## Appwrite
+
+Appwrite is the backend for the project. It is configured to be self-hosted using Docker. The server is started with `pnpm run appwrite:start` and can be accessed at [localhost:80](http://localhost:80/) or [localhost/console](http://localhost/console) for the console.
+
+For convenience, tooling has been added to initialize the server with the correct configurations. This is done with `pnpm run appwrite:init`.
+
+### Initialization
+
+A script has been created to initialize the database with the necessary teams, collections, attributes, documents, and permissions. When adding/changing fields, the script needs to be updated. If it is not, the next rebuild will not have changes made in the Appwrite console.
+
+All the configurations are stored in `./appwrite/appwrite.json` and the scripts are found in `./appwrite/scripts/`.
+
+**Before running**
+
+- Update all the .env files with the correct credentials
+  - `./appwrite/.env`
+  - `./.env`
+- Start the Appwrite server with `pnpm run appwrite:start`
+- Run the initialization script with `pnpm run appwrite:init`
+
+This script is run with `pnpm run appwrite:db:init`. The script is located in `./appwrite/init.ts`.
+
+When running appwrite:init it will run the script then unmount it.
+
+#### Database Collections/Atrributes/Documents/Permissions
+
+#### Environment Variables
+
+To add new environment variables, add them to the `./.env` (NOT `./appwrite/.env` for now). These can be imported using `import.meta.env.VARIABLE_NAME` and should be prefixed with `VITE_` to be available in the browser.
