@@ -15,9 +15,9 @@ This is a collection of commonly used open sourced projects for designers to uti
 
 **Appwrite** - NoSQL database
 `pnpm run appwrite:start` to start the Appwrite server.
+`pnpm run appwrite:init` to initialize the Appwrite server.
 [Appwrite Console](http://localhost:80/)
-Credentials can be found in `./appwrite/.env`
-Username: `admin`
+Credentials can be found in `./.env`
 
 **Tauri** - Desktop app framework
 `pnpm run tauri dev` to start the app.
@@ -32,14 +32,6 @@ Username: `admin`
 
 **Vitest** - Functional & logic testing framework
 `pnpm run test` to run tests.
-
-## General notes
-
-**errors when using `pnpm dlx`**
-
-I am using NVM to mangage my node versions. Sometimes weird things happen and I need to reset the node version. The system default is 18.15.0, but the projects use v20 and up so make sure the right version is set with `nvm list` (to see installed versions) and `nvm use 21.4.0` (to set the version).
-
-Note: bash doesn't have nvm in the path so you need to use `source ~/.nvm/nvm.sh` to load it in.
 
 ---
 
@@ -201,6 +193,8 @@ It is good to note that as soon as "invoke" is used to call the Rust backend, th
 [api docs](https://v2.tauri.app/reference/javascript/store/)
 
 This app uses the store plugin to manage state. It is a simple key-value store that can be accessed from the frontend and backend. In the future, I would like to encrypt the store to prevent data leakage for more sensitive projects.
+
+If you need to inspect the output files, they are located in (on mac) `/your-user-directory/Library/Application Support/com.designers-kit/`. The come is set in `./src-tauri/tauri.conf.json`.
 
 ## Appwrite
 
