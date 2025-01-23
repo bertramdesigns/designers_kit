@@ -26,8 +26,6 @@
                 {
                     "key": "workspaceid",
                     "type": "string",
-                    "status": "available",
-                    "error": "",
                     "required": true,
                     "array": false,
                     "size": 36,
@@ -36,8 +34,6 @@
                 {
                     "key": "name",
                     "type": "string",
-                    "status": "available",
-                    "error": "",
                     "required": true,
                     "array": false,
                     "size": 100,
@@ -46,8 +42,6 @@
                 {
                     "key": "description",
                     "type": "string",
-                    "stataus": "available",
-                    "error": "",
                     "required": false,
                     "array": false,
                     "size": 500,
@@ -72,8 +66,6 @@
                 {
                     "key": "taskid",
                     "type": "string",
-                    "status": "available",
-                    "error": "",
                     "required": true,
                     "array": false,
                     "size": 36,
@@ -82,8 +74,6 @@
                 {
                     "key": "title",
                     "type": "string",
-                    "status": "available",
-                    "error": "",
                     "required": false,
                     "array": false,
                     "size": 100,
@@ -92,8 +82,6 @@
                 {
                     "key": "description",
                     "type": "string",
-                    "status": "available",
-                    "error": "",
                     "required": false,
                     "array": false,
                     "size": 500,
@@ -102,8 +90,6 @@
                 {
                     "key": "status",
                     "type": "string",
-                    "status": "available",
-                    "error": "",
                     "required": true,
                     "array": false,
                     "size": 50,
@@ -112,8 +98,6 @@
                 {
                     "key": "labels",
                     "type": "string",
-                    "status": "available",
-                    "error": "",
                     "required": false,
                     "array": true,
                     "size": 50,
@@ -122,8 +106,6 @@
                 {
                     "key": "priority",
                     "type": "string",
-                    "status": "available",
-                    "error": "",
                     "required": false,
                     "array": false,
                     "size": 50,
@@ -132,31 +114,61 @@
                 {
                     "key": "startDate",
                     "type": "datetime",
-                    "status": "available",
-                    "error": "",
                     "required": false,
                     "array": false,
-                    "size": 100,
+                    "format": "",
                     "default": null
                 },
                 {
                     "key": "dueDate",
                     "type": "datetime",
-                    "status": "available",
-                    "error": "",
                     "required": false,
                     "array": false,
-                    "size": 100,
+                    "format": "",
                     "default": null
                 },
                 {
                     "key": "assignedTo",
                     "type": "string",
-                    "status": "available",
-                    "error": "",
                     "required": true,
                     "array": true,
                     "size": 100,
+                    "default": null
+                },
+                {
+                    "key": "createdBy",
+                    "type": "string",
+                    "required": true,
+                    "array": false,
+                    "size": 36,
+                    "default": null
+                },
+                {
+                    "key": "deleted",
+                    "type": "boolean",
+                    "required": false,
+                    "array": false,
+                    "default": false
+                },
+                {
+                    "key": "deletedAt",
+                    "type": "datetime",
+                    "required": false,
+                    "array": false,
+                    "format": "",
+                    "default": null
+                },
+                {
+                    "key": "deletedOnPlatform",
+                    "type": "string",
+                    "required": false,
+                    "array": false,
+                    "elements": [
+                        "web",
+                        "mobile",
+                        "desktop"
+                    ],
+                    "format": "enum",
                     "default": null
                 }
             ],
@@ -178,8 +190,6 @@
                 {
                     "key": "taskId",
                     "type": "string",
-                    "status": "available",
-                    "error": "",
                     "required": true,
                     "array": false,
                     "size": 100,
@@ -188,8 +198,6 @@
                 {
                     "key": "userId",
                     "type": "string",
-                    "status": "available",
-                    "error": "",
                     "required": true,
                     "array": false,
                     "size": 100,
@@ -198,31 +206,26 @@
                 {
                     "key": "startTime",
                     "type": "datetime",
-                    "status": "available",
-                    "error": "",
                     "required": true,
                     "array": false,
-                    "size": 100,
+                    "format": "",
                     "default": null
                 },
                 {
                     "key": "endTime",
                     "type": "datetime",
-                    "status": "available",
-                    "error": "",
                     "required": true,
                     "array": false,
-                    "size": 100,
+                    "format": "",
                     "default": null
                 },
                 {
                     "key": "duration",
                     "type": "integer",
-                    "status": "available",
-                    "error": "",
                     "required": true,
                     "array": false,
-                    "size": 100,
+                    "min": -9223372036854775808,
+                    "max": 9223372036854775807,
                     "default": null
                 }
             ],
