@@ -19,6 +19,8 @@ import {
   DropdownMenuTrigger,
 } from "~/components/solidui/dropdown-menu";
 
+import { deleteTask } from "~/store/taskStore";
+
 type TableRowActionsProps = {
   row: Row<any>;
   labels: { value: string; label: string }[];
@@ -36,7 +38,13 @@ export function TableRowActions(props: TableRowActionsProps) {
         <span class="sr-only">Open menu</span>
       </DropdownMenuTrigger>
       <DropdownMenuContent class="w-[160px]">
-        <DropdownMenuItem>Edit</DropdownMenuItem>
+        <DropdownMenuItem
+          onClick={() => {
+            console.log("Edit", props.row);
+          }}
+        >
+          Edit
+        </DropdownMenuItem>
         <DropdownMenuItem>Make a copy</DropdownMenuItem>
         <DropdownMenuItem>Favorite</DropdownMenuItem>
         <DropdownMenuSeparator />
@@ -57,7 +65,7 @@ export function TableRowActions(props: TableRowActionsProps) {
           </DropdownMenuPortal>
         </DropdownMenuSub>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>
+        <DropdownMenuItem onClick={() => console.log("Delete", props)}>
           Delete
           <DropdownMenuShortcut>⌘⌫</DropdownMenuShortcut>
         </DropdownMenuItem>

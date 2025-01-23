@@ -5,8 +5,8 @@ import type { ColumnDef } from "@tanstack/solid-table";
 import { Badge } from "~/components/solidui/badge";
 import { Checkbox } from "~/components/solidui/checkbox";
 
-import { TableColumnHeader } from "~/components/dkui/dataTable/table-column-header";
-import { TableRowActions } from "~/components/dkui/dataTable/table-row-actions";
+import { TableColumnHeader } from "~/pages/Productivity/dataTable/table-column-header";
+import { TableRowActions } from "~/pages/Productivity/dataTable/table-row-actions";
 
 import {
   FaSolidArrowDown,
@@ -65,17 +65,17 @@ export const statuses = [
 export const priorities = [
   {
     label: "Low",
-    value: "low",
+    value: "low" as TaskPriority,
     icon: FaSolidArrowDown,
   },
   {
     label: "Medium",
-    value: "medium",
+    value: "medium" as TaskPriority,
     icon: FaSolidArrowRight,
   },
   {
     label: "High",
-    value: "high",
+    value: "high" as TaskPriority,
     icon: FaSolidArrowUp,
   },
 ];

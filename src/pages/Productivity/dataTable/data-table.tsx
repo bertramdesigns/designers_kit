@@ -1,5 +1,4 @@
 import { createSignal, For, Show } from "solid-js";
-// import { createAsync, query } from "@solidjs/router";
 
 import type {
   ColumnDef,

@@ -1,21 +1,21 @@
-import { columns, priorities, statuses } from "./columns";
-import { DataTable } from "~/components/dkui/dataTable/data-table";
-import { AddTaskModal } from "./AddTaskModal";
+import { columns, priorities, statuses } from "./dataTable/columns";
+import { DataTable } from "~/pages/Productivity/dataTable/data-table";
+import { TaskModal } from "./TaskModal";
 import { createEffect, createSignal, onMount } from "solid-js";
-import { fetchTasks, taskStore } from "~/store/taskStore";
+import { taskStore } from "~/store/taskStore";
 
 export default function Tasks() {
-  const [refresh, setRefresh] = createSignal(false);
+  const [_, setRefresh] = createSignal(false);
 
   onMount(() => {
-    fetchTasks();
+    // fetchTasks();
   });
 
   createEffect(() => {
-    if (refresh()) {
-      fetchTasks();
-      setRefresh(false);
-    }
+    // if (refresh()) {
+    //   fetchTasks();
+    //   setRefresh(false);
+    // }
   });
 
   return (
@@ -28,7 +28,7 @@ export default function Tasks() {
           </p>
         </div>
       </div>
-      <AddTaskModal onTaskAdded={() => setRefresh(true)} />
+      <TaskModal onTaskAdded={() => setRefresh(true)} />
       <DataTable
         data={taskStore.tasks}
         columns={columns}
