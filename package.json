@@ -7,8 +7,8 @@
     "dev": "pnpm --filter client tauri:dev",
     "dev:web": "pnpm --filter client dev",
     "storybook": "pnpm --filter client storybook",
-    "start:server": "pnpm --filter server start:dev",
-    "stop:server": "pnpm --filter server stop:dev",
+    "start:server": "pnpm --filter server start",
+    "stop:server": "pnpm --filter server stop",
     "gen:id": "pnpm --filter server id"
   },
   "license": "MIT",
