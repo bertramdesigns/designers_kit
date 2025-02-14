@@ -3,7 +3,7 @@
 
 # Load environment variables from .env file
 set -o allexport
-source ./.env
+source ./.env.defaults
 set -o allexport -
 
 CONTAINER_NAME=appwrite
@@ -13,7 +13,7 @@ TARGET_DIR="/usr/src/code/app/temp-scripts"
 docker exec $CONTAINER_NAME mkdir -p $TARGET_DIR
 
 # Copy files to the container
-docker cp ./appwrite/scripts/init/create_user.php $CONTAINER_NAME:$TARGET_DIR/init.php
+docker cp ./scripts/init/create_user.php $CONTAINER_NAME:$TARGET_DIR/init.php
 
 # Execute the script with environment variables
 docker exec -it -e DEFAULT_ORG_ID=$DEFAULT_ORG_ID -e DEFAULT_ADMIN_EMAIL=$DEFAULT_ADMIN_EMAIL -e DEFAULT_ADMIN_PASSWORD=$DEFAULT_ADMIN_PASSWORD $CONTAINER_NAME php $TARGET_DIR/init.php
