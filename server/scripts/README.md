@@ -7,7 +7,7 @@
 
 ## init
 
-Configures a fresh install of appwrite. This script will use the `./.env` and `./appwrite/template.appwrite.json` files to configure a project and database with the keys, permissions, collections, and attributes. The script requires the docker container to be running with appwrite installed.
+Configures a fresh install of appwrite. This script will use the `./.env` and `./template.appwrite.json` files to configure a project and database with the keys, permissions, collections, and attributes. The script requires the docker container to be running with appwrite installed.
 
 `init.sh` copies and executes `init/create_user.php` on the docker container. Then the Appwrite CLI pushes the schema `./appwrite.json`, which configures the server. <!-- TODO: Within the project, this is also used to shape the types for the frontend. -->
 
@@ -15,10 +15,10 @@ Configures a fresh install of appwrite. This script will use the `./.env` and `.
 
 ```json
 {
-  "appwrite:init": "pnpm run appwrite:init:user && pnpm run appwrite:init:schema && pnpm run appwrite:init:db",
-  "appwrite:init:user": "sh ./appwrite/scripts/init/init.sh",
-  "appwrite:init:schema": "node ./appwrite/scripts/init/generate_schema.cjs",
-  "appwrite:init:db": "node ./appwrite/scripts/init/appwrite_cli_push_schema.js"
+  "init": "pnpm run init:user && pnpm run init:schema && pnpm run init:db",
+  "init:user": "sh ./scripts/init/init.sh",
+  "init:schema": "node ./scripts/init/generate_schema.cjs",
+  "init:db": "node ./scripts/init/appwrite_cli_push_schema.js"
 }
 ```
 
@@ -28,9 +28,9 @@ Appwrite doesnt really allow for you to configure a server outside a CI/CD pipel
 
 To get around this, we make the same calls as a user registration from web within the appwrite container, calling the PHP SDK from the vendor files in the container. This first login defaults to Admin. Then we create an organization (team) and associate the user with it.
 
-The script `generate_schema.cjs` populates `./appwrite.json` based on `./appwrite/template.appwrite.json` and the `./.env` variables, placing the resulting file in the root directory so the Appwrite CLI sees it.
+The script `generate_schema.cjs` populates `./appwrite.json` based on `./server/template.appwrite.json` and the `./.env` variables, placing the resulting file in the root directory so the Appwrite CLI sees it.
 
-Then we use the Appwrite CLI with `./appwrite/appwrite_cli_push_schema.js` to login with these new credentials and initialize the project and databases.
+Then we use the Appwrite CLI with `./server/scripts/appwrite_cli_push_schema.js` to login with these new credentials and initialize the project and databases.
 
 - Note: There is a bug in the Appwrite CLI that forces you to go through an interactive shell when creating a project. The workaround is to use 'projects' instead of 'project'.
 
@@ -50,12 +50,12 @@ If there is something new needing to be called, it is best to spin up an instanc
 
 Random ID is a script pulled from the Appwrite CLI library. It is a javascript recreation of php's [uniqid](https://www.php.net/manual/en/function.uniqid.php). It is not a guaranteed unique ID, but it is unique enough for our purposes.
 
-For convenience, the script can be run using `pnpm run appwrite:id` to return a random ID.
+For convenience, the script can be run using `pnpm run id` to return a random ID.
 
 ### node scripts
 
 ```json
 {
-  "appwrite:id": "node ./appwrite/scripts/random_id/generate_id.cjs"
+  "id": "node ./scripts/random_id/generate_id.cjs"
 }
 ```

@@ -1,0 +1,23 @@
+{
+    "name": "@designers-kit/server",
+    "version": "0.1.0",
+    "description": "",
+    "type": "module",
+    "scripts": {
+        "start": "docker compose -f docker-compose.yml up -d --remove-orphans",
+        "stop": "docker compose -f docker-compose.yml stop",
+        "uninstall": "docker compose -f docker-compose.yml down -v",
+        "login": "appwrite login --endpoint 'http://localhost/v1'",
+        "init": "pnpm run init:user && pnpm run init:schema && pnpm run init:db",
+        "init:user": "sh ./scripts/init/init.sh",
+        "init:schema": "node ./scripts/init/generate_schema.cjs",
+        "init:db": "node ./scripts/init/appwrite_cli_push_schema.js",
+        "id": "node ./scripts/random_id/generate_id.cjs"
+    },
+    "license": "MIT",
+    "dependencies": {},
+    "devDependencies": {
+        "appwrite-cli": "^6.1.0",
+        "dotenv": "^16.4.7"
+    }
+}

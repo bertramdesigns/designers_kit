@@ -2,9 +2,25 @@ import { exec, spawn } from 'child_process';
 import dotenv from 'dotenv';
 import path from 'path';
 
+// paths
+const clientEnvPath = path.resolve('../client/.env');
+const serverEnvPath = path.resolve('./.env');
+const serverDefaultsEnvPath = path.resolve('./.env.defaults');
+
 // Load environment variables from .env file
-dotenv.config({ path: './appwrite/.env' });
-dotenv.config({ path: './.env' });
+dotenv.config({ path: clientEnvPath });
+dotenv.config({ path: serverEnvPath });
+dotenv.config({ path: serverDefaultsEnvPath });
+
+// Check if required environment variables are set
+const requiredEnvVars = ['VITE_APPWRITE_ENDPOINT', 'VITE_APPWRITE_PROJECT_ID', 'DEFAULT_ADMIN_EMAIL', 'DEFAULT_ADMIN_PASSWORD', 'DEFAULT_ORG_ID', '_APP_DOMAIN'];
+const missingEnvVars = requiredEnvVars.filter((key) => !process.env[key]);
+if (missingEnvVars.length > 0) {
+    console.error(`Missing required environment variables:\n${missingEnvVars.join('\n')}\n`);
+    console.error('Check that the .env and .env.default files exist in ./server and ./client directories.\nThen check filepaths in ./server/scripts/init/appwrite_cli_push_schema.js');
+    console.error(`\nPaths resolve to:\nclient     .env      : ${clientEnvPath}\nserver     .env      : ${serverEnvPath}\nserver .env.defaults : ${serverDefaultsEnvPath}\n`);
+    process.exit(1);
+}
 
 // Function to execute a non-interactive shell command and return it as a Promise
 const execCommand = (command) => {
