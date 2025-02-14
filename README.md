@@ -4,6 +4,8 @@ This is a collection of commonly used open sourced projects for designers to uti
 
 ## ToC
 
+- [Cheat Sheet](#cheatsheet)
+- [Getting Started](#getting-started)
 - [SolidUI Docs](#solidui)
 - [SolidIcons Docs](#solidicons)
 - [Storybook Docs](#storybook)
@@ -13,27 +15,80 @@ This is a collection of commonly used open sourced projects for designers to uti
 
 ## Cheatsheet
 
-**Appwrite** - NoSQL database
-`pnpm run appwrite:start` to start the Appwrite server.
-`pnpm run appwrite:init` to initialize the Appwrite server.
+**Start**\
+From the root of monorep:
+
+```bash
+   pnpm run start:server
+   pnpm run dev
+```
+
+**Stop**\
+From the root of monorep:
+
+```bash
+   pnpm run stop:server
+   # Close the app or press Ctrl+C
+```
+
+**Appwrite** - NoSQL database\
+_monorepo:_ `pnpm run start:server` to start the Appwrite server.\
+_package:_ `pnpm run init` to initialize the Appwrite server.\
 [Appwrite Console](http://localhost:80/)
-Credentials can be found in `./.env`
+Credentials can be found in `./server/.env.defaults`
 
-**Tauri** - Desktop app framework
-`pnpm run tauri dev` to start the app.
-[App](http://localhost:1420/)
+**Tauri** - Desktop app framework\
+_client:_ `pnpm run tauri dev` to start the app.
+_monorepo:_ `pnpm run dev` to start the app.
+[App web endpoint](http://localhost:1420/)
 
-**SolidUI** - UI library
-`pnpm exec solidui-cli add <component-name>` to add a component.
+**SolidUI** - UI library\
+_client:_ `pnpm exec solidui-cli add <component-name>` to add a component.
 
-**Storybook** - Component library & UI Testing
-`pnpm run storybook` to start Storybook.
-`pnpm run storybook:build` to build Storybook.
+**Storybook** - Component library & UI Testing\
+_client & mono:_ `pnpm run storybook` to start Storybook.\
+_client:_ `pnpm run storybook:build` to build Storybook.
 
-**Vitest** - Functional & logic testing framework
+**Vitest** - Functional & logic testing framework\
 `pnpm run test` to run tests.
 
 ---
+
+## Getting started
+
+### Step 1: Configure your .env files
+
+Check the `.env` & `.env.defaults` files in `./client` and `./server` and set IDs and credentials.
+
+There is a script to help you generate unique IDs for these:
+
+```bash
+   pnpm run gen:id
+```
+
+### Step 2: initialize and start the server/database
+
+Start the server and then initialize it. This creates your account from the defaults and configures the database according to template.appwrite.json.
+
+```bash
+   cd server
+   pnpm run start
+   pnpm run init
+   cd ..
+```
+
+### Step 3: start the desktop app
+
+Start the tauri app from the root of the monorepo.
+
+```bash
+   pnpm run dev
+```
+
+### Extras: access appwrite (server) console
+
+You can access the appwrite console at [http://localhost/console/](http://localhost/console//)
+Change the credentials from your defaults in the `./server/.env.defaults` file after you login.
 
 ---
 
@@ -198,30 +253,28 @@ If you need to inspect the output files, they are located in (on mac) `/your-use
 
 ## Appwrite
 
-Appwrite is the backend for the project. It is configured to be self-hosted using Docker. The server is started with `pnpm run appwrite:start` and can be accessed at [localhost:80](http://localhost:80/) or [localhost/console](http://localhost/console) for the console.
+Appwrite is the backend for the project. It is configured to be self-hosted using Docker. The server is started with `pnpm run start:server` from the monorepo root and can be accessed at [localhost:80](http://localhost:80/) or [localhost/console](http://localhost/console) for the console.
 
-For convenience, tooling has been added to initialize the server with the correct configurations. This is done with `pnpm run appwrite:init`.
+For convenience, tooling has been added to initialize the server. Follow [Getting Started](#getting-started) to configure the server.
 
-### Initialization
+### Collections/Atrributes/Documents/Permissions
 
-A script has been created to initialize the database with the necessary teams, collections, attributes, documents, and permissions. When adding/changing fields, the script needs to be updated. If it is not, the next rebuild will not have changes made in the Appwrite console.
+A script has been created to initialize the database with the necessary teams, collections, attributes, documents, and permissions. When changes to the Appwrite instance are made you should:
 
-All the configurations are stored in `./appwrite/appwrite.json` and the scripts are found in `./appwrite/scripts/`.
+1. Use the [Appwrite CLI](https://appwrite.io/docs/tooling/command-line/installation) to export the schema.
 
-**Before running**
+```bash
+appwrite login
+# could be buckets, collections, functions, etc.
+appwrite pull collections
+```
 
-- Update all the .env files with the correct credentials
-  - `./appwrite/.env`
-  - `./.env`
-- Start the Appwrite server with `pnpm run appwrite:start`
-- Run the initialization script with `pnpm run appwrite:init`
+2. Compare the resulting `appwrite.json` with the `template.appwrite.json` file. If there are differences, update the template file.
 
-This script is run with `pnpm run appwrite:db:init`. The script is located in `./appwrite/init.ts`.
+If you do not pull the changes, you will loose them on next rebuild. So make sure the `template.appwrite.json` is up to date before pushing to github and rebuilding.
 
-When running appwrite:init it will run the script then unmount it.
-
-#### Database Collections/Atrributes/Documents/Permissions
+All the configurations are stored in `./template.appwrite.json` and the scripts are found in `./scripts/`.
 
 #### Environment Variables
 
-To add new environment variables, add them to the `./.env` (NOT `./appwrite/.env` for now). These can be imported using `import.meta.env.VARIABLE_NAME` and should be prefixed with `VITE_` to be available in the browser.
+To add new environment variables, add them to the `./client/.env` (NOT `./server/.env` for now). These can be imported using `import.meta.env.VARIABLE_NAME` from the client and should be prefixed with `VITE_` to be available.
