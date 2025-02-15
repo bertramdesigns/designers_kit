@@ -1,11 +1,15 @@
 import { exec, spawn } from 'child_process';
+import { fileURLToPath } from 'url';
 import dotenv from 'dotenv';
 import path from 'path';
 
 // paths
-const clientEnvPath = path.resolve('../client/.env');
-const serverEnvPath = path.resolve('./.env');
-const serverDefaultsEnvPath = path.resolve('./.env.defaults');
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const clientEnvPath = path.resolve(__dirname, '../../../client/.env');
+const serverEnvPath = path.resolve(__dirname, '../../.env');
+const serverDefaultsEnvPath = path.resolve(__dirname, '../../.env.defaults');
 
 // Load environment variables from .env file
 dotenv.config({ path: clientEnvPath });
