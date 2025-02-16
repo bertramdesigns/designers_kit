@@ -16,10 +16,11 @@ const isContainerInstalled = async (projectName) => {
 };
 
 const startContainer = async (projectName) => {
-    let startCMD = `docker compose -p ${projectName} -f docker-compose.yml up -d --remove-orphans --quiet-pull`
-
+    // if running in GitHub Actions, use the .env file doesn't exist. Use example file instead.
+    const envFilename = process.env.GITHUB_ACTIONS ? '.env.example' : '.env';
+    const startCMD = `docker compose --env-file ${envFilename} -p ${projectName} -f docker-compose.yml up -d --remove-orphans --quiet-pull`;
     try {
-        await execPromise(process.env.GITHUB_ACTIONS ? `${startCMD} --env-file .env.example` : startCMD);
+        await execPromise(startCMD);
         console.log('Docker container started successfully.');
     } catch (error) {
         console.error('Failed to start Docker container:', error.message);
