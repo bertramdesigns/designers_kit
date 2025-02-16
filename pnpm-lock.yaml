@@ -140,6 +140,9 @@ importers:
       dotenv:
         specifier: ^16.4.7
         version: 16.4.7
+      vitest:
+        specifier: ^2.1.8
+        version: 2.1.8(@types/node@22.10.9)(jsdom@25.0.1)
 
 packages:
 

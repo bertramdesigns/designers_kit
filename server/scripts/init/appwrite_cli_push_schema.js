@@ -1,16 +1,62 @@
 import { exec, spawn } from 'child_process';
+import { fileURLToPath } from 'url';
 import dotenv from 'dotenv';
 import path from 'path';
+import fs from 'fs';
 
 // paths
-const clientEnvPath = path.resolve('../client/.env');
-const serverEnvPath = path.resolve('./.env');
-const serverDefaultsEnvPath = path.resolve('./.env.defaults');
 
-// Load environment variables from .env file
-dotenv.config({ path: clientEnvPath });
-dotenv.config({ path: serverEnvPath });
-dotenv.config({ path: serverDefaultsEnvPath });
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const clientBasePath = '../../../client';
+const serverBasePath = '../../';
+
+const clientEnvPath = path.resolve(__dirname, clientBasePath, '.env');
+const clientEnvExamplePath = path.resolve(__dirname, clientBasePath, '.env.example');
+const serverEnvPath = path.resolve(__dirname, serverBasePath, '.env');
+const serverEnvExamplePath = path.resolve(__dirname, serverBasePath, '.env.example');
+const serverEnvDefaultsPath = path.resolve(__dirname, serverBasePath, '.env.defaults');
+const serverEnvDefaultsExamplePath = path.resolve(__dirname, serverBasePath, '.env.defaults.example');
+
+// Client .env
+if (fs.existsSync(clientEnvPath)) {
+    // Load environment variables
+    dotenv.config({ path: clientEnvPath });
+} else if (fs.existsSync(clientEnvExamplePath)) {
+    // default back to the example file. Probably running in a CI environment
+    console.log('No client .env file found. Using the example file.');
+    dotenv.config({ path: clientEnvExamplePath });
+} else {
+    console.log('Missing client .env file.');
+}
+
+// Server .env
+if (fs.existsSync(serverEnvPath)) {
+    // Load environment variables
+    dotenv.config({ path: serverEnvPath });
+} else if (fs.existsSync(serverEnvExamplePath)) {
+    // default back to the example file. Probably running in a CI environment
+    console.log('No server .env file found. Using the example file.');
+    dotenv.config({ path: serverEnvExamplePath });
+} else {
+    console.log('Missing server .env file.');
+}
+
+// Server .env.defaults
+if (fs.existsSync(serverEnvDefaultsPath)) {
+    // Load environment variables
+    dotenv.config({ path: serverEnvDefaultsPath });
+} else if (fs.existsSync(serverEnvDefaultsExamplePath)) {
+    // default back to the example file. Probably running in a CI environment
+    console.log('No server .env.defaults file found. Using the example file.');
+    dotenv.config({ path: serverEnvDefaultsExamplePath });
+} else {
+    console.log('Missing server .env.defaults file.');
+}
+
+
+
 
 // Check if required environment variables are set
 const requiredEnvVars = ['VITE_APPWRITE_ENDPOINT', 'VITE_APPWRITE_PROJECT_ID', 'DEFAULT_ADMIN_EMAIL', 'DEFAULT_ADMIN_PASSWORD', 'DEFAULT_ORG_ID', '_APP_DOMAIN'];

@@ -1,4 +1,4 @@
-class ID {
+export class ID {
     // Generate an hex ID based on timestamp
     // From the Appwrite CLI https://github.com/appwrite/sdk-for-cli/blob/master/lib/id.js
     // Recreated from https://www.php.net/manual/en/function.uniqid.php
@@ -27,5 +27,3 @@ class ID {
         return baseId + randomPadding;
     }
 }
-
-module.exports = ID;
