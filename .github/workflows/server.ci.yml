@@ -23,9 +23,8 @@ jobs:
         with:
           version: 10
 
-      - name: Install Appwrite CLI
-        run: |
-          curl -sL https://appwrite.io/cli/install.sh | sh
+      - name: Install dependencies
+        run: pnpm install
 
       - name: Run tests
         run: |
