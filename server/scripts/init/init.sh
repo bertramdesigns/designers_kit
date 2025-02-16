@@ -13,7 +13,8 @@ elif [ -f ./.env.defaults.example ]; then
     source ./.env.defaults.example
     set -o allexport -
 else
-    echo "No .env.defaults file found. Exiting."
+    echo "No .env.defaults file found. Working directory: $(pwd)" >&2
+    # exit with error
     exit 1
 fi
 

@@ -28,7 +28,7 @@ if (fs.existsSync(clientEnvPath)) {
     console.log('No client .env file found. Using the example file.');
     dotenv.config({ path: clientEnvExamplePath });
 } else {
-    console.log('Missing client .env file.');
+    console.error('Missing client .env file.');
 }
 
 // Server .env
@@ -40,7 +40,7 @@ if (fs.existsSync(serverEnvPath)) {
     console.log('No server .env file found. Using the example file.');
     dotenv.config({ path: serverEnvExamplePath });
 } else {
-    console.log('Missing server .env file.');
+    console.error('Missing server .env file.');
 }
 
 // Server .env.defaults
@@ -52,7 +52,7 @@ if (fs.existsSync(serverEnvDefaultsPath)) {
     console.log('No server .env.defaults file found. Using the example file.');
     dotenv.config({ path: serverEnvDefaultsExamplePath });
 } else {
-    console.log('Missing server .env.defaults file.');
+    console.error('Missing server .env.defaults file.');
 }
 
 

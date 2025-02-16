@@ -9,7 +9,7 @@ const __dirname = path.dirname(__filename);
 
 const clientEnvBasePath = '../../../client/.env';
 const clientEnvPath = path.resolve(__dirname, clientEnvBasePath);
-const clientEnvExamplePath = path.resolve(__dirname, clientEnvBasePath, `.example`);
+const clientEnvExamplePath = path.resolve(__dirname, `${clientEnvBasePath}.example`);
 const templatePath = path.resolve(__dirname, '../../template.appwrite.json');
 
 // Check if the client environment file exists
@@ -22,7 +22,7 @@ if (fs.existsSync(clientEnvPath)) {
     console.log('Please make sure to create a .env file in the client directory.');
     dotenv.config({ path: clientEnvExamplePath });
 } else {
-    console.error(`File ${clientEnvPath} not found.\nExample env path: ${clientEnvExamplePath}\n__dirname: ${__dirname}\n__filename: ${__filename}`);
+    console.error(`File ${clientEnvPath} not found.`);
     process.exit(1);
 }
 
