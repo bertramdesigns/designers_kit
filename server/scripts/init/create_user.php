@@ -96,6 +96,8 @@ $orgID = getenv('DEFAULT_ORG_ID');
 $email = getenv('DEFAULT_ADMIN_EMAIL');
 $password = getenv('DEFAULT_ADMIN_PASSWORD');
 
+echo "\nEndpoint: $endpoint\n";
+
 $client = initClient($endpoint);
 
 createUser($client, $userID, $email, $password);
