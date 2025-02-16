@@ -22,10 +22,7 @@ if (fs.existsSync(clientEnvPath)) {
     console.log('Please make sure to create a .env file in the client directory.');
     dotenv.config({ path: clientEnvExamplePath });
 } else {
-    console.log(`__filename ${__filename}`);
-    console.log(`__dirname ${__dirname}`);
-    console.log(`Example path ${clientEnvExamplePath}`);
-    console.error(`File ${clientEnvPath} not found.`);
+    console.error(`File ${clientEnvPath} not found.\nExample env path: ${clientEnvExamplePath}\n__dirname: ${__dirname}\n__filename: ${__filename}`);
     process.exit(1);
 }
 
