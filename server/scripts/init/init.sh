@@ -1,10 +1,22 @@
 #!/bin/bash
 # Script to copy and run files in the container to initialize the appwrite instance
 
-# Load environment variables from .env file
-set -o allexport
-source ./.env.defaults
-set -o allexport -
+# Load environment variables from .env file if it exists
+if [ -f ./.env.defaults ]; then
+  set -o allexport
+  source ./.env.defaults
+  set -o allexport -
+elif [ -f ./.env.defaults.example ]; then
+    # No .env.defaults file. Probably running in CI. Use the example file.
+    echo "No .env.defaults file found. Using .env.defaults.example file."
+    set -o allexport
+    source ./.env.defaults.example
+    set -o allexport -
+else
+    echo "No .env.defaults file found. Exiting."
+    exit 1
+fi
+
 
 CONTAINER_NAME=appwrite
 TARGET_DIR="/usr/src/code/app/temp-scripts"

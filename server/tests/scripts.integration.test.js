@@ -31,9 +31,9 @@ describe('Integration Tests for server setup Scripts', () => {
     it('init:user script', async () => {
         const output = await runScript('init:user');
         console.log('output:', output);
-        expect(output).toContain('Session cookie:');
+        // expect(output).toContain('Session cookie:');
         // expect(output).toContain('Organization ID:');
-        // expect(output).toContain('Associated user with organization.');
+        expect(output).toContain('Associated user with organization.');
         // expect(output).toContain('Please remember to change your password after login.');
         // expect(output).toContain('User creation script executed and cleaned up.');
     });
@@ -45,11 +45,10 @@ describe('Integration Tests for server setup Scripts', () => {
 
     it('init:db script', async () => {
         const output = await runScript('init:db');
-        expect(output).toContain('✓ Success: Successfully signed in as ');
-        // expect(output).toContain('✓ Success: Successfully pushed all project settings.');
-        // expect(output).toMatch(/✓ Success: Successfully pushed \d+ collections\./);
-        // expect(output).toContain('✓ Success: Logging out');
-        // expect(output).toContain('Commands executed successfully.');
+        // expect(output).toContain('✓ Success: Successfully signed in as ');
+        expect(output).toContain('✓ Success: Successfully pushed all project settings.');
+        expect(output).not.toContain('Error:');
+        expect(output).toContain('Commands executed successfully.');
 
     });
 });

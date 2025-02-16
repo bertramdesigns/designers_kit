@@ -7,16 +7,24 @@ import { ID } from '../random_id/id.js';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const clientEnvPath = path.resolve(__dirname, '../../../client/.env');
+const clientEnvBasePath = '../../../client/.env';
+const clientEnvPath = path.resolve(__dirname, clientEnvBasePath);
+const clientEnvExamplePath = path.resolve(__dirname, clientEnvBasePath, `.example`);
 const templatePath = path.resolve(__dirname, '../../template.appwrite.json');
 
-if (!fs.existsSync(clientEnvPath)) {
-    console.error(`File ${clientEnvPath} not found`);
+// Check if the client environment file exists
+if (fs.existsSync(clientEnvPath)) {
+    // Load environment variables
+    dotenv.config({ path: clientEnvPath });
+} else if (fs.existsSync(clientEnvExamplePath)) {
+    // default back to the example file. Probably running in a CI environment
+    console.log('No client .env file found. Using the example file.');
+    console.log('Please make sure to create a .env file in the client directory.');
+    dotenv.config({ path: clientEnvExamplePath });
+} else {
+    console.error(`File ${clientEnvPath} not found.`);
     process.exit(1);
 }
-
-// Load environment variables (from root directory)
-dotenv.config({ path: clientEnvPath });
 
 // Read the template file
 const template = fs.readFileSync(templatePath, 'utf8');
