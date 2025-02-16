@@ -90,13 +90,14 @@ function associateUserWithOrganization($client, $orgID) {
 }
 
 // Env variables are added in the Docker call in init.sh
-$endpoint = str_replace('{DOMAIN}', getenv('_APP_DOMAIN'), 'http://{DOMAIN}/v1');
+$domain = getenv('_APP_DOMAIN');
+$endpoint = str_replace('{DOMAIN}', $domain, 'http://{DOMAIN}/v1');
+echo "Using endpoint: $endpoint\n"; // Debug statement
+echo "Domain: $domain\n"; // Debug statement
 $userID = ID::unique();
 $orgID = getenv('DEFAULT_ORG_ID');
 $email = getenv('DEFAULT_ADMIN_EMAIL');
 $password = getenv('DEFAULT_ADMIN_PASSWORD');
-
-echo "\nEndpoint: $endpoint\n";
 
 $client = initClient($endpoint);
 
