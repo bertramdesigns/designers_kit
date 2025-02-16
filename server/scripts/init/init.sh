@@ -4,16 +4,16 @@
 # Load environment variables from .env file if it exists
 if [ -f ./.env.defaults ]; then
   set -o allexport
-  source ./.env.defaults
+  . ./.env.defaults
   set -o allexport -
 elif [ -f ./.env.defaults.example ]; then
     # No .env.defaults file. Probably running in CI. Use the example file.
     echo "No .env.defaults file found. Using .env.defaults.example file."
     set -o allexport
-    source ./.env.defaults.example
+    . ./.env.defaults.example
     set -o allexport -
 else
-    echo "No .env.defaults file found. Working directory: $(pwd)" >&2
+    echo "No .env.defaults file found."
     # exit with error
     exit 1
 fi
