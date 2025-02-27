@@ -2,5 +2,6 @@ packages:
   - "server"
   - "client"
   - "docs"
+  - "website"
   - "crates/*"
   - "packages/*"
