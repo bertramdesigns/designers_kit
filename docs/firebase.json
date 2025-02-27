@@ -1,5 +1,6 @@
 {
   "hosting": {
+    "site": "designers-kit-docs-77715",
     "public": "build",
     "ignore": [
       "firebase.json",
