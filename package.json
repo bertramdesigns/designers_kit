@@ -10,7 +10,8 @@
     "start:server": "pnpm --filter server start",
     "stop:server": "pnpm --filter server stop",
     "test:server": "pnpm --filter server test",
-    "gen:id": "pnpm --filter server id"
+    "gen:id": "pnpm --filter server id",
+    "docs:start": "pnpm --filter docs start"
   },
   "license": "MIT",
   "dependencies": {},
