@@ -11,6 +11,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - run: pnpm run install
       - run: pnpm run build
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
@@ -23,6 +25,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - run: pnpm run install
       - run: pnpm run build
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
