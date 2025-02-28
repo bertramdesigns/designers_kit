@@ -24,6 +24,7 @@ jobs:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_DESIGNERS_KIT_STAGING }}
           projectId: designers-kit-staging
+          target: staging
   website_build_and_preview:
     if: ${{ github.event.pull_request.head.repo.full_name == github.repository }}
     runs-on: ubuntu-latest
@@ -40,3 +41,4 @@ jobs:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_DESIGNERS_KIT_STAGING }}
           projectId: designers-kit-staging
+          target: staging
