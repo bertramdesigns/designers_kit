@@ -1,0 +1,21 @@
+name: Deploy Documentation Site to Production with Firebase Hosting
+on:
+  workflow_dispatch:
+jobs:
+  docs_build_and_deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+      - run: pnpm install
+      - run: pnpm run build:docs
+      - uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          entrypoint: ./docs
+          repoToken: ${{ secrets.GITHUB_TOKEN }}
+          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_DESIGNERS_KIT_89446 }}
+          channelId: live
+          projectId: designers-kit
+          target: docs-77715

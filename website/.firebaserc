@@ -1,7 +1,5 @@
 {
   "projects": {
-    "default": "designers-kit-staging",
-    "production": "designers-kit-89446",
-    "staging": "designers-kit-staging"
+    "default": "designers-kit-staging"
   }
 }
