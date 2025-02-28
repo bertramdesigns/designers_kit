@@ -1,24 +1,11 @@
 {
-  "hosting": [
-    {
-      "target": "production",
-      "site": "designers-kit-docs-77715",
-      "public": "build",
-      "ignore": [
-        "firebase.json",
-        "**/.*",
-        "**/node_modules/**"
-      ]
-    },
-    {
-      "target": "staging",
-      "site": "designers-kit-staging-docs",
-      "public": "build",
-      "ignore": [
-        "firebase.json",
-        "**/.*",
-        "**/node_modules/**"
-      ]
-    }
-  ]
+  "hosting": {
+    "site": "designers-kit-staging-docs",
+    "public": "build",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ]
+  }
 }
