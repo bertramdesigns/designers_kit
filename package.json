@@ -5,13 +5,17 @@
   "type": "module",
   "scripts": {
     "dev": "pnpm --filter client tauri:dev",
-    "dev:web": "pnpm --filter client dev",
+    "dev:webapp": "pnpm --filter client dev",
     "storybook": "pnpm --filter client storybook",
+    "start:docs": "pnpm --filter docs start",
+    "start:webapp": "pnpm --filter client start",
     "start:server": "pnpm --filter server start",
     "stop:server": "pnpm --filter server stop",
     "test:server": "pnpm --filter server test",
-    "gen:id": "pnpm --filter server id",
-    "docs:start": "pnpm --filter docs start"
+    "build:client": "pnpm --filter client build",
+    "build:docs": "pnpm --filter docs build",
+    "build:website": "pnpm --filter website build",
+    "gen:id": "pnpm --filter server id"
   },
   "license": "MIT",
   "dependencies": {},

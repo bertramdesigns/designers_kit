@@ -15,7 +15,7 @@ jobs:
         with:
           version: 10
       - run: pnpm install
-      - run: pnpm run build
+      - run: pnpm run build:docs
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           entrypoint: /docs
@@ -31,7 +31,7 @@ jobs:
         with:
           version: 10
       - run: pnpm install
-      - run: pnpm run build
+      - run: pnpm run build:website
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           entrypoint: /website
