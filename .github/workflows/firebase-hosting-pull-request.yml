@@ -20,7 +20,7 @@ jobs:
       - run: pnpm run build:docs
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
-          entrypoint: /docs
+          entrypoint: ./docs
           repoToken: ${{ secrets.GITHUB_TOKEN }}
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_DESIGNERS_KIT_STAGING }}
           projectId: designers-kit-staging
@@ -36,7 +36,7 @@ jobs:
       - run: pnpm run build:website
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
-          entrypoint: /website
+          entrypoint: ./website
           repoToken: ${{ secrets.GITHUB_TOKEN }}
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_DESIGNERS_KIT_STAGING }}
           projectId: designers-kit-staging
