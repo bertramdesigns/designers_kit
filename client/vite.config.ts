@@ -1,6 +1,9 @@
-import path from "path";
+import path from "path"
+import tailwindcss from "@tailwindcss/vite"
 import { defineConfig } from "vite";
-import solid from "vite-plugin-solid";
+import react from "@vitejs/plugin-react";
+import { TanStackRouterVite } from '@tanstack/router-plugin/vite'
+
 
 // @ts-expect-error process is a nodejs global
 const host = process.env.TAURI_DEV_HOST;
@@ -8,27 +11,16 @@ const host = process.env.TAURI_DEV_HOST;
 
 // https://vitejs.dev/config/
 export default defineConfig(async () => ({
-  plugins: [solid()],
+  plugins: [TanStackRouterVite({ target: 'react', autoCodeSplitting: true }), react(), tailwindcss()],
   resolve: {
     alias: {
       // SolidUI (Tailwind) additions to resolve `~` imports
-      "~": path.resolve(__dirname, "./src")
+      "@": path.resolve(__dirname, "./src")
     },
     // essential for vitest. Otherwise will fail with "Client-only API called on server side"
     conditions: ['development', 'browser'],
   },
 
-  // Vitest
-  test: {
-    environment: "jsdom",
-    globals: true,
-    setupFiles: ['node_modules/@testing-library/jest-dom/vitest'],
-    isolate: false,
-    coverage: {
-      provider: "v8",
-      reporter: ['text', 'html'],
-    }
-  },
 
   // Vite options tailored for Tauri development and only applied in `tauri dev` or `tauri build`
   //

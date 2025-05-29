@@ -1,6 +1,6 @@
-import solid from "vite-plugin-solid";
+import type { StorybookConfig } from '@storybook/react-vite';
 
-const config = {
+const config: StorybookConfig = {
   stories: ["./docs/**/*.mdx", "../src/**/*.stories.@(js|jsx|mjs|ts|tsx)"],
   addons: [
     "@storybook/addon-essentials",
@@ -8,15 +8,6 @@ const config = {
     "@storybook/addon-interactions",
     "@storybook/addon-themes",
   ],
-  framework: {
-    name: "@storybook/html-vite",
-    options: {},
-  },
-  viteFinal(config) {
-    // make solid work
-    config.plugins?.unshift(solid({ hot: false }));
-
-    return config;
-  }
+  framework: '@storybook/react-vite',
 };
 export default config;
